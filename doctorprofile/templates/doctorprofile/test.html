@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<form action="{% url 'doctorprofile:test' %}" method="POST" enctype='multipart/form-data'>
+    {% csrf_token %} 
+  <div class="mb-3">
+    <label for="formFile" class="form-label">Choose a Profile Image</label>
+    <input class="form-control" type="file" id="formFile" name="img" />
+  </div>
+  <button type="submit">ok</button>
+</form>
+{% endblock %}

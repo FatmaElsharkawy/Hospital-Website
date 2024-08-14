@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}
+  Appointments
+{% endblock %}
+{% block content %}
+  {% include 'doctorprofile/navbar.html' with doctor_id=doctor_id %}
+  <div class="container">
+    <div class="card my-4">
+      <div class="card-header" style="background-color: #3b7197; color:white;">Appointments</div>
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Number</th>
+              <th>Patient Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Type</th>
+              <th>Room Number</th>
+              <th>Appointment Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for appointment in appointments %}
+              <tr>
+                <td>{{ appointment.0 }}</td>
+                <td>{{ appointment.1 }} {{ appointment.2 }}</td>
+                <td>{{ appointment.3 }}</td>
+                <td>{{ appointment.4 }}</td>
+                <td>{{ appointment.5 }}</td>
+                <td>{{ appointment.6 }}</td>
+                <td>{{ appointment.7 }}</td>
+                <td>
+                  <div class="d-flex">
+                    <form action="{% url 'doctorprofile:appointments-page' %}" method="POST">
+                      <input type="hidden" name="completed_app" value="{{ appointment.0 }}" />
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-light mx-1" style="color:#3b7197; border-color: #3b7197;">Mark as Completed</button>
+                    </form>
+                    <form action="{% url 'doctorprofile:appointments-page' %}" method="POST">
+                      <input type="hidden" name="canceled_app" value="{{ appointment.0 }}" />
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-outline-danger mx-1">Cancel Appointment</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
